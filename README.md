@@ -10,6 +10,8 @@ New data can also be added to the analysis, if it follows the same format as the
 <img width="315" height="175" alt="image" src="https://github.com/user-attachments/assets/110880b6-892b-4ce4-9c30-288ef27ac345" />
 <img width="343" height="186" alt="image" src="https://github.com/user-attachments/assets/afff6b4e-432e-43f1-a39d-89f3b1d2626a" />
 
+# Scripts
+The repository contains five scripts (
 
 
 
