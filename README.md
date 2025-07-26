@@ -6,9 +6,10 @@ The original analysis was performed using ten datasets, the designed to emulate 
 
 New data can also be added to the analysis, if it follows the same format as the processed dataset. That is, needs to have the following folder, file, and naming structure.
 
-<img width="218" height="507" alt="image" src="https://github.com/user-attachments/assets/30c45921-a88e-41a2-a386-c8fdffbbdbe5" />
-<img width="206" height="80" alt="image" src="https://github.com/user-attachments/assets/8c5b7150-3181-45a0-b7ee-85b6f4bebecf" />
-<img width="222" height="96" alt="image" src="https://github.com/user-attachments/assets/24852b53-21a6-4700-a1dc-f83ec76db18d" />
+<img width="316" height="164" alt="image" src="https://github.com/user-attachments/assets/2de6e6b6-445f-4063-8e2f-004f8196c301" />
+<img width="315" height="175" alt="image" src="https://github.com/user-attachments/assets/110880b6-892b-4ce4-9c30-288ef27ac345" />
+<img width="343" height="186" alt="image" src="https://github.com/user-attachments/assets/afff6b4e-432e-43f1-a39d-89f3b1d2626a" />
+
 
 
 
