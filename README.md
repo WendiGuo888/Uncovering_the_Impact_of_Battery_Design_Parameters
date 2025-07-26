@@ -5,5 +5,6 @@ This repository contains the scripts needed for extracting features from partial
 The original analysis was performed using ten datasets, the designed to emulate the operation of EVs using the WLTC driving profiles. The raw data and processed data can be found at Zenodo at https://doi.org/10.5281/zenodo.15626215.
 
 New data can also be added to the analysis, if it follows the same format as the processed dataset. That is, needs to have the following folder, file, and naming structure.
+<img width="218" height="507" alt="image" src="https://github.com/user-attachments/assets/30c45921-a88e-41a2-a386-c8fdffbbdbe5" />
 
 
