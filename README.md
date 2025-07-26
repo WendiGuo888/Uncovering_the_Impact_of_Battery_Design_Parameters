@@ -13,8 +13,16 @@ New data can also be added to the analysis, if it follows the same format as the
 # Scripts
 The repository contains six scripts:
 
--   `
+-   `featureextraction`: A script for extracting 29 physically interpretable features from processed structure data; the script depends on the function `features_extraction`. Furthermore, the extraction depends on the processed **EFC.mat**, **EOCV.mat**.
+-   `functions`: A script for splitting train and test datasets in function `split_battery_data_with_train_test_dynamic`, dynamically decides whether to embed physical features in function `process_features_with_physics`, predict physical features using partial charges in function `predict_and_plot`, setting embed aging columns in function `process_train_val_test_data_optimized`.
+-   `learnphysics`: A script for get the mapping relationship between the simulation profiles and partial charges based on extracted features. It get mapping relationship depends on three categories features: voltage, capacity, and capacity deviation. Using the function `process_and_analyze_battery_data`.
+-   `main`: A script used to extract features, map simulation features, organize all battery datasets, and train models, evaluate the performance with or without physical features from digital twin simulation files.
+-   `trainmodels`: A script used to train models using the training dataset. It includes training RF model with MMD loss in function `train_and_evaluate_rf_mmd`, training RF model in function `train_and_evaluate_rf`, and train RF models using random partial charges in function `evaluate_voltage_range`.
+-   `visualization`: A script used to visualize the trained model performance with our without physical features from digital twin simulation files, and determine feature importance using SHAP analysis.
 
+# License
+This project is licensed under the MIT License.
 
-
+# Acknowledgements
+This work is supported by Nordic Energy Research (Vehicle battery storage for green transport and grid stability in the Nordics), the Swedish Electromobility Center and the Swedish Energy Agency project EV drivers in the driver’s seat.
 
