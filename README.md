@@ -3,7 +3,7 @@ This repository contains scripts for extracting features from partial charges an
 used to model battery state of health (SOH) and remaining useful life (RUL). It is the official implementation of the paper:  "Uncovering the Impact of Battery Design Parameters on Health and Lifetime Using Short Charging Segments". The entire analysis pipeline is implemented in Python and includes: `featureextraction` for data preprocessing, `trainmodels` and `main`for modelling SOH and RUL using several machine learning methods: Random Forest(RF), Support Vector Regression (SVR), XGBoost, Multi-layer Perceptron (MLP), and Linear Regression (LR).
 
 # Data
-The original analysis was performed using ten datasets designed to emulate electric vehicle (EV) operation under World Harmonized Light Vehicles Test Cycle (WLTC) driving profiles. Both the raw and processed data can be found on Zenodo: https://doi.org/10.5281/zenodo.15626215. Only one multistep fast-charging dataset is publicly available.
+The original analysis was performed using ten datasets designed to emulate electric vehicle (EV) operation under World Harmonized Light Vehicles Test Cycle (WLTC) driving profiles. Both the raw and processed data can be found on Zenodo: https://doi.org/10.5281/zenodo.16538328. Only one multistep fast-charging dataset is publicly available.
 
 New data can be added to the analysis, as long as it follows the same format as the processed dataset. Specifically, it must adhere to the required folder structure, file naming conventions, and file formats.
 <img width="316" height="164" alt="image" src="https://github.com/user-attachments/assets/2de6e6b6-445f-4063-8e2f-004f8196c301" />
