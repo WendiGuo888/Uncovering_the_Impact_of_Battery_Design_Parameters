@@ -40,8 +40,8 @@ def split_battery_data_with_train_test_dynamic(
     # Integrate aging conditions (current, temperature) into each battery’s data
     for i, df in enumerate(feature_dataframes, start=1):
         feature_key = f"feature{i}"
-        current_condition = current_mapping.get(feature_key, [0, 0, 0, 0])  # 获取电流条件
-        temperature_condition = temperature_mapping.get(feature_key, 25)  # 获取温度条件
+        current_condition = current_mapping.get(feature_key, [0, 0, 0, 0])  
+        temperature_condition = temperature_mapping.get(feature_key, 25) 
 
   
         current_df = pd.DataFrame([current_condition] * len(df), 
@@ -149,13 +149,12 @@ feature_names = ['EFC', 'seq_CC', 'seq_CV', 'EOCV', 'IC_peak', 'IC_area', 'V_pea
                 'media_DQ','kurt_DQ', 'skew_DQ', 'std_DQ','shanEntro_DQ',
                 'epsspos_predicted', 'rpneg_predicted', 'Lneg_predicted', 'cspos_predicted', 'Lpos_predicted', 'Dneg_predicted'] 
 
-target_col_indices = slice(-13, -11)  # 目标列为倒数第12到第11列
+target_col_indices = slice(-13, -11)  
 
 aging_columns = ['current_1', 'current_2', 'current_3', 'current_4','temperature']
 
 # Select the 12th and 11th columns from the end as target variables
 current_physical_features = ["EFC"]
-
 
 def process_train_val_test_data_optimized(
     train_dataframes,
@@ -168,12 +167,11 @@ def process_train_val_test_data_optimized(
     aging_columns=None
 ):
     """
-    Optimize logic: if only EFC is specified, perform Spearman correlation-based selection excluding physical features
+    Optimize logic: if only EFC is specified, perform Spearman correlation-based selection, excluding physical features
     """
 
     all_physical_features = ["rpneg_predicted", "Lneg_predicted", "cspos_predicted", 
                              "epsspos_predicted", "Lpos_predicted", "Dneg_predicted", "EFC"]
-
 
     all_train_features = []
     all_train_targets = []
@@ -185,7 +183,6 @@ def process_train_val_test_data_optimized(
             X = X.drop(columns=aging_columns, errors="ignore")
         all_train_features.append(X)
         all_train_targets.append(y)
-
 
     # perform global feature selection based on feature importance or correlation
     all_train_features_combined = pd.concat(all_train_features, axis=0)
@@ -209,7 +206,7 @@ def process_train_val_test_data_optimized(
             global_selected_features.append("EFC")
         combined_cor = combined_cor.drop([feature for feature in all_physical_features if feature != "EFC"], errors="ignore")
     else:
-        # When physical features are specified, keep the selected physical features and EFC, exclude the rest
+        # When physical features are specified, keep the selected physical features and EFC, and exclude the rest
         for feature in all_physical_features:
             if feature in important_physical_features and feature in combined_cor.index:
                 combined_cor.loc[feature] = combined_cor.max() + 1  
@@ -229,7 +226,6 @@ def process_train_val_test_data_optimized(
         global_selected_features += additional_features
 
     print(f"Globally selected features (optimized): {global_selected_features}")
-
 
     global_scaler = MinMaxScaler()
 
