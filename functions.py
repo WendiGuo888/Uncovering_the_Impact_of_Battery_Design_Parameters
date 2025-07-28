@@ -42,7 +42,6 @@ def split_battery_data_with_train_test_dynamic(
         feature_key = f"feature{i}"
         current_condition = current_mapping.get(feature_key, [0, 0, 0, 0])  
         temperature_condition = temperature_mapping.get(feature_key, 25) 
-
   
         current_df = pd.DataFrame([current_condition] * len(df), 
                                   columns=[f'current_{j+1}' for j in range(len(current_condition))])
@@ -54,7 +53,6 @@ def split_battery_data_with_train_test_dynamic(
             train_dataframes.append(conditioned_df)
         elif i - 1 in test_indices:
             test_dataframes.append(conditioned_df)
-
     return train_dataframes, test_dataframes
 
 #%% Dynamically decide whether to embed physical features
@@ -108,7 +106,6 @@ def process_features_with_physics(
 
         # save
         processed_features.append(feature_df)
-    
     return processed_features
 
 #%% predict physical features
@@ -241,14 +238,11 @@ def process_train_val_test_data_optimized(
             else:
                 aging_data = pd.DataFrame()
 
-
             X_filtered = X[global_selected_features]
-
 
             if dataset_name == "train" and i == 1:
                 global_scaler.fit(X_filtered)
             X_norm = global_scaler.transform(X_filtered)
-
 
             if not aging_data.empty:
                 X_final = pd.concat(
@@ -264,11 +258,9 @@ def process_train_val_test_data_optimized(
 
     train_selected_data = {"train": process_dataframe_list(train_dataframes, "train")}
     test_selected_data = {"test": process_dataframe_list(test_dataframes, "test")}
-
     return train_selected_data, test_selected_data, global_selected_features, global_scaler
 
 def remove_low_outliers(group):
-
     Q1_soh = group["SOH_R2"].quantile(0.25)
     Q3_soh = group["SOH_R2"].quantile(0.75)
     IQR_soh = Q3_soh - Q1_soh
@@ -278,7 +270,6 @@ def remove_low_outliers(group):
     Q3_rul = group["RUL_R2"].quantile(0.75)
     IQR_rul = Q3_rul - Q1_rul
     lower_bound_rul = Q1_rul - 0 * IQR_rul  
-
     return group[(group["SOH_R2"] >= lower_bound_soh) & (group["RUL_R2"] >= lower_bound_rul)]
 
 def remove_high_outliers_iqr(group):
