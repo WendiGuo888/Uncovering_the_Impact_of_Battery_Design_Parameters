@@ -126,7 +126,6 @@ initial_physical_features = ["rpneg_predicted", "Lneg_predicted", 'Dneg_predicte
 result_dictionaries = [result_epss, result_rpneg, result_Lneg, result_cspos, result_Lpos, result_Dneg]
 variable_names = ['epsspos', 'rpneg', 'Lneg', 'cspos', 'Lpos', 'Dneg']
 
-
 physical_feature_conditions = [
     {"label": "With Physical Features", "features": initial_physical_features + ["EFC"]},
     {"label": "Without Physical Features", "features": ["EFC"]} 
@@ -259,7 +258,7 @@ for metric in results_comparison_melted["metric"].unique():
     ylabel = metric
     plot_grouped_violin(data=metric_data, ylabel=ylabel)
     
-#%% cycle wise with or without physics 
+#%% cycle-wise with or without physics 
 # The early prediction capability with or without physical features
 random_seeds = [42, 101, 202, 303, 404, 505, 606, 707, 808, 909]
 
@@ -284,8 +283,6 @@ for condition in physical_feature_conditions:
     label = condition["label"]
     current_physical_features = condition["features"]
     print(f"\nCondition: {label}, Features: {current_physical_features}")
-    
-
 
     for run_id, seed in enumerate(random_seeds):
         train_dataframes, test_dataframes = split_battery_data_with_train_test_dynamic(
@@ -434,7 +431,6 @@ for seed in random_seeds:
 
     X_test_soh = X_test[:60]
     X_test_rul = X_test[:80]
-
     y_train_weighted = y_train * (1.0, 0.001)
 
     # train RF model
@@ -693,9 +689,7 @@ for config in evaluation_configs:
             X_test = pd.concat([v["X"] for v in test_selected_data["test"].values()]).values
             y_test = pd.concat([v["y"] for v in test_selected_data["test"].values()]).values
 
-
             best_params = param_dict.get(model_name, {})
-
 
             if isinstance(best_params, dict) and "SOH" in best_params and "RUL" in best_params:
                 base_model = model_mapping[model_name]
@@ -719,7 +713,6 @@ for config in evaluation_configs:
                 base_model.fit(X_train, y_train * (1, 0.001))
                 train_time = time.time() - start_time
                 y_pred = base_model.predict(X_test) / (1, 0.001)
-
 
             test_mae = {
                 "SOH": mean_absolute_error(y_test[:, 0], y_pred[:, 0]),
@@ -825,13 +818,11 @@ error_dict = evaluate_voltage_range(
 )
 
 # plot MAE error
-
 plot_voltage_mae_heatmap(
     error_dict=error_dict_no_phys,
     metric_key="RUL_MAE",
     title="RUL MAE Without P*"
 )
-
 
 plot_voltage_mae_heatmap(
     error_dict=error_dict_no_phys,
@@ -839,13 +830,11 @@ plot_voltage_mae_heatmap(
     title="SOH MAE Without P*"
 )
 
-
 plot_voltage_mae_heatmap(
     error_dict=error_dict,
     metric_key="RUL_MAE",
     title="RUL MAE With P*"
 )
-
 
 plot_voltage_mae_heatmap(
     error_dict=error_dict,
