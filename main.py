@@ -10,10 +10,8 @@ import numpy as np
 import warnings
 import shap
 
-
-
 from featureextraction import features_extraction
-from learn_design import process_and_analyze_battery_data
+from learndesign import process_and_analyze_battery_data
 
 from functions import split_battery_data_with_train_test_dynamic
 from functions import process_train_val_test_data_optimized
@@ -34,12 +32,10 @@ from visualization import prepare_radar_data
 from visualization import plot_radar_custom
 from visualization import plot_voltage_mae_heatmap
 
-
 from sklearn.svm import SVR
 from xgboost import XGBRegressor
 from sklearn.neural_network import MLPRegressor
 from sklearn.linear_model import LinearRegression
-
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.multioutput import MultiOutputRegressor
 from sklearn.metrics import mean_absolute_error, mean_absolute_percentage_error
@@ -48,7 +44,6 @@ from sklearn.metrics import mean_absolute_error, mean_absolute_percentage_error
 warnings.filterwarnings("ignore")  
 
 # %% Extract features
-
 cell01 = features_extraction('1C25degC/mat/data.mat', '1C25degC/mat/EOCV.mat', '1C25degC/mat/EFC.mat', '1C25degC/mat/RPT_EFC.mat', '1C25degC/mat/SOH.mat', V_min=3.65, V_max=4.1, I_min=100, I_max=500) 
 cell02 = features_extraction('1.3C25degC/mat/data.mat', '1.3C25degC/mat/EOCV.mat', '1.3C25degC/mat/EFC.mat', '1.3C25degC/mat/RPT_EFC.mat', '1.3C25degC/mat/SOH.mat', V_min=3.65, V_max=4.1, I_min=100, I_max=500) 
 cell03 = features_extraction('2C25degCs2/mat/data.mat', '2C25degCs2/mat/EOCV.mat', '2C25degCs2/mat/EFC.mat', '2C25degCs2/mat/RPT_EFC.mat', '2C25degCs2/mat/SOH.mat', V_min=3.65, V_max=4.1, I_min=100, I_max=500) 
@@ -61,7 +56,6 @@ cell09 = features_extraction('2C0degCs2/mat/data.mat', '2C0degCs2/mat/EOCV.mat',
 cell10 = features_extraction('MC25degCs2/mat/data.mat', 'MC25degCs2/mat/EOCV.mat', 'MC25degCs2/mat/EFC.mat', 'MC25degCs2/mat/RPT_EFC.mat', 'MC25degCs2/mat/SOH.mat', V_min=3.65, V_max=4.1, I_min=100, I_max=500)
 
 #%% mapping simulation features
-
 result_epss = process_and_analyze_battery_data('digital_twin_data/CCCV generationv1.txt', 'epsspos', 2.95, 4.2)
 result_rpneg = process_and_analyze_battery_data('digital_twin_data/CCCV generationv2.txt', 'rpneg', 2.95, 4.2)
 result_Lneg = process_and_analyze_battery_data('digital_twin_data/CCCV generationv3.txt', 'Lneg', 2.95, 4.2)
@@ -70,7 +64,6 @@ result_Lpos = process_and_analyze_battery_data('digital_twin_data/CCCV generatio
 result_Dneg = process_and_analyze_battery_data('digital_twin_data/CCCV generationv6.txt', 'Dneg', 2.95, 4.2)
 
 #%% aging condition mapping
-
 # aging conditions
 current_mapping = {
 
@@ -139,7 +132,6 @@ physical_feature_conditions = [
     {"label": "Without Physical Features", "features": ["EFC"]} 
 ]
 
-
 feature_names = ['EFC', 'seq_CC', 'seq_CV', 'EOCV', 'IC_peak', 'IC_area', 'V_peak', 'Q_DV',  
                 'slope_DQ', 'slope_I', 'min_DQ',
                 'media_I', 'kurt_I', 'skew_I', 'std_I','shanEntro_I', 
@@ -197,13 +189,11 @@ for train_ratio in train_ratios:
                 aging_columns=None
             )
 
-
             X_train = pd.concat([data['X'] for data in train_selected_data['train'].values()]).values
             y_train = pd.concat([data['y'] for data in train_selected_data['train'].values()]).values
             X_test = pd.concat([data['X'] for data in test_selected_data['test'].values()]).values
             y_test = pd.concat([data['y'] for data in test_selected_data['test'].values()]).values
 
-            
             # train RF model
             _, rf_results_mmd, _, _, _, _ = train_and_evaluate_rf_mmd(
                 train_selected_data=train_selected_data,
@@ -270,9 +260,7 @@ for metric in results_comparison_melted["metric"].unique():
     plot_grouped_violin(data=metric_data, ylabel=ylabel)
     
 #%% cycle wise with or without physics 
-
 # The early prediction capability with or without physical features
-
 random_seeds = [42, 101, 202, 303, 404, 505, 606, 707, 808, 909]
 
 physical_feature_conditions = [
@@ -300,7 +288,6 @@ for condition in physical_feature_conditions:
 
 
     for run_id, seed in enumerate(random_seeds):
-        # 数据划分
         train_dataframes, test_dataframes = split_battery_data_with_train_test_dynamic(
             feature_dataframes=feature_dataframes,
             current_mapping=current_mapping,
@@ -309,7 +296,6 @@ for condition in physical_feature_conditions:
             random_state=seed
         )
         
-        # 处理训练集电池数据
         processed_train_features = process_features_with_physics(
             feature_dataframes=train_dataframes, 
             result_dictionaries=result_dictionaries, 
@@ -317,7 +303,6 @@ for condition in physical_feature_conditions:
             include_physical_features=True
         )
 
-        # 处理测试集电池数据
         processed_test_features = process_features_with_physics(
             feature_dataframes=test_dataframes, 
             result_dictionaries=result_dictionaries, 
@@ -325,7 +310,6 @@ for condition in physical_feature_conditions:
             include_physical_features=True
         )
 
-        # 数据预处理
         train_selected_data, test_selected_data, _, _ = process_train_val_test_data_optimized(
             train_dataframes=train_dataframes,
             test_dataframes=test_dataframes,
@@ -362,15 +346,13 @@ for condition in physical_feature_conditions:
                 hyperparameter_search=False,
                 weights=(1, 0.001),
             )
-        
 
             soh_mae = mean_absolute_error(y_test[:, 0], y_test_pred[:, 0])
             rul_mae = mean_absolute_error(y_test[:, 1], y_test_pred[:, 1])
             
             soh_mape = mean_absolute_percentage_error(y_test[:, 0], y_test_pred[:, 0])
             rul_mape = mean_absolute_percentage_error(y_test[:, 1], y_test_pred[:, 1])
-
-            
+ 
             for metric, value in zip(["SOH MAE", "RUL MAE", "SOH MAPE", "RUL MAPE"], [soh_mae, rul_mae, soh_mape, rul_mape]):
                 detailed_results_cycle["cycle"].append(cycle)
                 detailed_results_cycle["physical_features"].append(label)
@@ -410,7 +392,6 @@ best_rf_params_cleaned = {
     for k, v in best_rf_params_multitask.items() 
     if k in ["n_estimators", "max_depth", "min_samples_split", "min_samples_leaf", "max_features", "bootstrap"]
 }
-
 
 for seed in random_seeds:
 
@@ -601,9 +582,7 @@ feature_name_mapping_rf = {
     "std_DQ": "Standard Deviation of DQ"
 }
 
-
 X_df_full = X_df_all.rename(columns=feature_name_mapping_rf)
-
         
 plot_shap_beeswarm(
     shap_values=shap_values_rul_all,
@@ -615,7 +594,6 @@ plot_shap_beeswarm(
     value_fontsize=10,
     title_fontsize=12,
 )
-
 
 plot_shap_beeswarm(
     shap_values=shap_values_soh_all,
@@ -637,7 +615,6 @@ model_mapping = {
     "MLP": MLPRegressor(max_iter=2000, random_state=42),
     "Linear Regression": LinearRegression()
 }
-
 
 evaluation_configs = [
     {
@@ -661,7 +638,6 @@ results_detailed_with_phys = {"model": [], "setting": [], "metric": [], "seed": 
 results_summary_with_phys = {"model": [], "setting": [], "metric": [], "mean": [], "std": []}
 
 random_seeds = [42, 101, 202, 303, 404, 505, 606, 707, 808, 909]
-
 for config in evaluation_configs:
     param_dict = globals()[config["param_source"]]  
     physical_features = (
@@ -770,7 +746,6 @@ for config in evaluation_configs:
             results_summary_with_phys["mean"].append(np.mean(values))
             results_summary_with_phys["std"].append(np.std(values))
 
-
 results_detailed_df_with_phys = pd.DataFrame(results_detailed_with_phys)
 results_summary_df_with_phys = pd.DataFrame(results_summary_with_phys)
 
@@ -804,7 +779,6 @@ plot_radar_custom(
 # initialize list to store results
 V_MAXIMUM = np.arange(3.85, 4.1 + 0.05, 0.05)
 V_MINIMUM = np.arange(3.5, 3.8 + 0.05, 0.05)
-
 # ----------------------------
 # create a mapping between file names and feature variables
 # ----------------------------
