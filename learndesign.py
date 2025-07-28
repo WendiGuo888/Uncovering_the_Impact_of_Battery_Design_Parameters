@@ -2,7 +2,6 @@
 
 This file learns the mapping relationship from simulation profiles.
 """
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -13,7 +12,6 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import GridSearchCV
 #%%
-
 def shannon_entropy(xdata,binnumber):
     # Calculate frequency and intervals using the numpy.histogram function
     counts, bin_edges = np.histogram(xdata, bins=binnumber, density=True)
@@ -48,7 +46,6 @@ def movmean(data, window_size):
 def calculate_slope(data):
     x = np.arange(len(data))
     return np.polyfit(x, data, 1)[0]
-
 
 def extract_voltage_features(voltage_series):
     # Extract various statistical features from a pandas series of V data
