@@ -17,7 +17,6 @@ from functions import split_battery_data_with_train_test_dynamic
 from functions import process_features_with_physics
 from functions import process_train_val_test_data_optimized
 #%% define multitask RF with MMD loss
-
 # MMD Loss
 def mmd_rbf_per_sample(X, Y, gamma=1.0):
     """MMD distance (sample-wise)"""
@@ -170,11 +169,9 @@ def train_and_evaluate_rf_mmd(
         "Test R²": test_r2
     }
 
-
     return rf_model, results, y_train_pred, y_test_pred, y_train, y_test
 
 #%% define multitask RF 
-
 def train_random_forest_multitask_optimized(
     X_train, y_train, 
     n_estimators=100, max_depth=None, 
@@ -340,7 +337,6 @@ def evaluate_voltage_range(
                 continue
 
             print(f"\nProcessing Voltage Range: {v_min}V - {v_max}V, Physical = {include_physical_features}")
-
 
             feature_dataframes = []
             for file_name, feature_name in file_feature_mapping.items():
