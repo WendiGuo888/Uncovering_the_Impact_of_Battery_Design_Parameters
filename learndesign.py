@@ -107,7 +107,6 @@ def process_and_analyze_battery_data(file_path, variable_name, voltage_start_thr
         # Optionally, calculate the total sequence length reaching 4.2V if needed
         seq_CV = group[group['Voltage'] >= voltage_end_threshold].shape[0]
         charging_df['seq_CC'] = seq_CV * 10
-        
         charging_segments[epsspos] = charging_df
 
     # features extraction
@@ -126,7 +125,6 @@ def process_and_analyze_battery_data(file_path, variable_name, voltage_start_thr
         
         # Extract the first values of seqCC and seqCV
         seq_cc = segment['seq_CC'].iloc[0]  # Take the first value
-
 
         combined_features = {
             **voltage_features, 
@@ -209,8 +207,7 @@ def process_and_analyze_battery_data(file_path, variable_name, voltage_start_thr
     plt.ylabel('Importance', fontsize = 16)
     
     sm = cm.ScalarMappable(cmap=colormap, norm=plt.Normalize(vmin=np.min(importances), vmax=np.max(importances)))
-    sm.set_array([])
-    
+    sm.set_array([])  
     plt.show()
 
     #%% return important features and model
@@ -222,9 +219,6 @@ def process_and_analyze_battery_data(file_path, variable_name, voltage_start_thr
         'rf_model': best_rf,
         'rf_important_model': rf_important
     }
-
 #%%
-
 if  __name__ == '__main__':
     result_epss = process_and_analyze_battery_data('CCCV generation #1.txt', 'epsspos', 2.95, 4.2)
-
