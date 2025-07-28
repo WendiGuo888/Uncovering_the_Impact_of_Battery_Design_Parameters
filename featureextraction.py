@@ -8,11 +8,11 @@ This file extracts physically interpretable features from structured data.
 import h5py
 import numpy as np
 import pandas as pd
-from scipy.stats import kurtosis, skew
-from scipy.interpolate import interp1d
 import statistics
 import matplotlib.pyplot as plt
 from scipy.io import loadmat
+from scipy.stats import kurtosis, skew
+from scipy.interpolate import interp1d
 #%%
 def process_data_mat(filename):
     data = []  # list for storing data
