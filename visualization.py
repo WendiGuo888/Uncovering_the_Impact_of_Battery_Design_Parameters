@@ -20,14 +20,12 @@ color_palette = {
     "Without Physical Features": "#CBBBC1"
 }
 
-
 def plot_grouped_violin(data, ylabel):
     if data.empty:
         print(f"⚠️ Data is empty, cannot plot {ylabel}.")
         return 
 
     fig, ax = plt.subplots(figsize=(5, 3))  
-
     sns.violinplot(
         x="train_ratio", 
         y="value", 
@@ -71,7 +69,6 @@ def plot_grouped_violin(data, ylabel):
     plt.ylabel(ylabel, fontsize=16)
     plt.xticks(fontsize=14)
     plt.yticks(fontsize=14)   
-
     plt.tight_layout()
     plt.show()
 
@@ -97,7 +94,6 @@ def find_elbow_point_min_value(mae_means, cycles):
     import numpy as np
     min_index = np.argmin(mae_means)
     return cycles[min_index]
-
 
 def plot_with_error_bars_and_trend_with_split(df, metric_filter, ylabel, title,
                                               threshold=0.003, stable_window=2, max_fluctuation=0.006):
