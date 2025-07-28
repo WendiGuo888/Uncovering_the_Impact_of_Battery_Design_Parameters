@@ -55,8 +55,7 @@ def extract_voltage_features(voltage_series):
         'std_V': voltage_series.std(),
         'skew_V': voltage_series.skew(),
         'shanEntro_V': shannon_entropy(voltage_series,len(voltage_series)),
-        'slope_V':calculate_slope(voltage_series)
-        
+        'slope_V':calculate_slope(voltage_series)   
     }
     return features
 
@@ -66,8 +65,7 @@ def extract_capacity_features(capacity_series):
 
         'std_Q': capacity_series.std(),
         'skew_Q': capacity_series.skew(),
-        'kurt_Q': capacity_series.kurt(),
-        
+        'kurt_Q': capacity_series.kurt(), 
     }
     return features
 
@@ -135,7 +133,6 @@ def process_and_analyze_battery_data(file_path, variable_name, voltage_start_thr
             **Q_features, 
             **DQ_features,  
             'seq_CC': seq_cc
-
             }
         all_features.append(combined_features)
 
