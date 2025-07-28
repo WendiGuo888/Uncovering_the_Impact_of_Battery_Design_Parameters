@@ -24,10 +24,9 @@ color_palette = {
 def plot_grouped_violin(data, ylabel):
     if data.empty:
         print(f"⚠️ Data is empty, cannot plot {ylabel}.")
-        return  # 跳过空数据
+        return 
 
     fig, ax = plt.subplots(figsize=(5, 3))  
-
 
     sns.violinplot(
         x="train_ratio", 
@@ -41,12 +40,10 @@ def plot_grouped_violin(data, ylabel):
         dodge=True  
     )
 
-
     legend_patches = [
         mpatches.Patch(color=color_palette["With Physical Features"], label="With P*"),
         mpatches.Patch(color=color_palette["Without Physical Features"], label="Without P*")
     ]
-    
 
     if ylabel in ["SOH R²", "RUL R²"]:
         ax.legend(
@@ -79,7 +76,6 @@ def plot_grouped_violin(data, ylabel):
     plt.show()
 
 #%% add split cycle judgement and opt plot
-
 def find_elbow_point_stable_soft(mae_means, cycles, threshold=0.003, stable_window=2, max_fluctuation=0.006):
     """
     A more robust way to identify the convergence turning point
@@ -105,14 +101,10 @@ def find_elbow_point_min_value(mae_means, cycles):
 
 def plot_with_error_bars_and_trend_with_split(df, metric_filter, ylabel, title,
                                               threshold=0.003, stable_window=2, max_fluctuation=0.006):
-    import matplotlib.pyplot as plt
-    import numpy as np
-
     plt.figure(figsize=(8, 4.5))
     x_labels = sorted(df["cycle"].unique())
     bar_width = 0.35
     x_indices = np.arange(len(x_labels))
-
 
     palette = {
         "With Physical Features": "#1f77b4",
@@ -150,7 +142,6 @@ def plot_with_error_bars_and_trend_with_split(df, metric_filter, ylabel, title,
         offset = -bar_width / 2 if idx == 0 else bar_width / 2
         color = palette[physical_feature]
 
-
         plt.bar(
             x_indices + offset, mean_values, bar_width,
             label=label_map[physical_feature], yerr=std_values, capsize=5,
@@ -162,7 +153,6 @@ def plot_with_error_bars_and_trend_with_split(df, metric_filter, ylabel, title,
             marker="o", linestyle="--", linewidth=2,
             label=label_map[physical_feature + " Trend"], color=color
         )
-
 
         elbow = find_elbow_point_min_value(mean_values, cycles)
         
@@ -185,10 +175,8 @@ def plot_with_error_bars_and_trend_with_split(df, metric_filter, ylabel, title,
     plt.ylabel(ylabel, fontsize=20)
     legend_loc = "upper right" if "SOH" in metric_filter else "lower right"
     plt.legend(fontsize=15, loc=legend_loc)
-
     plt.grid(False)
-    plt.tight_layout()
-    
+    plt.tight_layout()  
     plt.show()
 
 def plot_heatmap(shap_df, title="SHAP Heatmap"):
@@ -207,13 +195,11 @@ def plot_heatmap(shap_df, title="SHAP Heatmap"):
     ax.tick_params(axis='x', labelsize=11)
     ax.tick_params(axis='y', labelsize=11)
 
-
     colorbar = ax.collections[0].colorbar
     colorbar.ax.tick_params(labelsize=11)
     colorbar.set_label("Mean |SHAP|", fontsize=12)
 
-    plt.tight_layout()
-        
+    plt.tight_layout()   
     plt.show()
 
 # === SHAP Summary Plot===
@@ -246,7 +232,6 @@ def plot_shap_beeswarm(
     )
     
     plt.gcf().set_size_inches(figsize)
-
     if title:
         plt.title(title, fontsize=title_fontsize, pad=8)
 
@@ -256,7 +241,6 @@ def plot_shap_beeswarm(
     plt.show()
  
 #%% radar plot
-
 model_order = ["Linear Regression", "SVR", "XGBoost", "MLP", "Random Forest"]
 setting_map = {
     "NoPhysParam_NoPhysFeat": "NoPhysParam_NoP*",
@@ -325,7 +309,6 @@ def plot_radar_custom(
     if title_text:
         ax.set_title(title_text, fontsize=title_fontsize, pad=5)
 
-
     ax.legend(
         loc='upper center',
         bbox_to_anchor=(0.5, -0.06),
@@ -335,7 +318,6 @@ def plot_radar_custom(
     )
 
     plt.subplots_adjust(bottom=0.25) 
-    
     plt.show()
     
 def plot_voltage_mae_heatmap(
