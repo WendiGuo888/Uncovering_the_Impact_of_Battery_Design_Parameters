@@ -3,21 +3,18 @@
 This file extracts physically interpretable features from structured data.
 
 """
-
 #%%
 import h5py
 import numpy as np
 import pandas as pd
-from scipy.stats import kurtosis, skew
-from scipy.interpolate import interp1d
 import statistics
 import matplotlib.pyplot as plt
 from scipy.io import loadmat
+from scipy.stats import kurtosis, skew
+from scipy.interpolate import interp1d
 #%%
 def process_data_mat(filename):
-    data = []  # list for storing data
-    
-    
+    data = []  # list for storing data    
     try:        
         # Open .mat file
         with h5py.File(filename, 'r') as mat_file:
@@ -96,7 +93,6 @@ def process_data_mat(filename):
 
     return df,cycle_fields
 
-
 def process_data_other(filename):
     try:
         # try to open the .mat file using h5py
@@ -121,7 +117,6 @@ def process_data_other(filename):
             print(f"Failed to open file with loadmat: {e}")
             raise
 
-
 def shannon_entropy(xdata,binnumber):
     # use the numpy.histogram function to calculate frequencies and bins
     counts, bin_edges = np.histogram(xdata, bins=binnumber, density=True)
@@ -137,9 +132,7 @@ def shannon_entropy(xdata,binnumber):
 
     return shannon_entropy
 
-
-def movmean(data, window_size):
-    
+def movmean(data, window_size):    
     smoothed_data = []
     if window_size % 2 == 0:
         for i in range(len(data)):
@@ -152,17 +145,14 @@ def movmean(data, window_size):
             start = max(0, i - (window_size-1) // 2 )
             end = min(len(data), i + (window_size - 1) // 2)
             window = data[start:end+1]
-            smoothed_data.append(np.mean(window))
-                
-
+            smoothed_data.append(np.mean(window))                
     return np.array(smoothed_data)
 
 def calculate_slope(data):
     x = np.arange(len(data))
     return np.polyfit(x, data, 1)[0]
 
-def features_extraction (datafile, EOCVfile, FECfile, RPT_FECfile, RPT_SOHfile, V_min, V_max, I_min, I_max):
-        
+def features_extraction(datafile, EOCVfile, FECfile, RPT_FECfile, RPT_SOHfile, V_min, V_max, I_min, I_max):      
     #  process the data file using a function and return a dataframe
     dataframe,cycle_eff = process_data_mat(datafile)
     EOCV = process_data_other(EOCVfile)
@@ -220,7 +210,6 @@ def features_extraction (datafile, EOCVfile, FECfile, RPT_FECfile, RPT_SOHfile, 
             Q_selected = dataframe.loc[(cycle_name, 'CCCV_Chg', 'Q')]
             I_selected = dataframe.loc[(cycle_name, 'CCCV_Chg', 'I')]
 
-        
         I_data.append(I_selected.tolist()[0][0])
         
         # find the indices that meet the range condition
@@ -236,15 +225,12 @@ def features_extraction (datafile, EOCVfile, FECfile, RPT_FECfile, RPT_SOHfile, 
         stdValues_I.append(np.std(I_fragment[i]))
         shannonEntropy_I.append(shannon_entropy(I_fragment[i],'scott'))
         slope_I.append(calculate_slope(I_fragment[i]))
-                 
-        
+                   
         V_data.append(V_selected.tolist()[0][0])
         
         # find the indices that meet the range condition
-        V_data_array = np.array(V_data[i])
-        
+        V_data_array = np.array(V_data[i]) 
         indices = np.where((V_data_array >= V_min) & (V_data_array <= V_max))[0]
-         
         V_fragment.append(V_data_array[indices])
         
         trmean_V.append(np.median(V_fragment[i]))
@@ -304,7 +290,6 @@ def features_extraction (datafile, EOCVfile, FECfile, RPT_FECfile, RPT_SOHfile, 
         
         # update the maximum dimension
         max_length = max(max_length, current_length)
-    
        
     # initialize a list to store features
     V_fragment_interp = []
@@ -387,7 +372,6 @@ def features_extraction (datafile, EOCVfile, FECfile, RPT_FECfile, RPT_SOHfile, 
         
         start_index = np.argmax(V_arrry >= mode_value)
         
-        # 将递增和不变序列存储为新的变量
         V_increasing.append(V[:start_index])  # CC
         V_constant.append(V[start_index:])    # CV
         Q_increasing.append(Q[:start_index])  # CC
@@ -467,7 +451,6 @@ def features_extraction (datafile, EOCVfile, FECfile, RPT_FECfile, RPT_SOHfile, 
               
     #===Extract features based on DV===
     
-    # 初始化存储数据的列表
     interpolated_Q_DV = []
     interpolated_V_DV = []
     smooth_DV = []
@@ -557,11 +540,11 @@ def features_extraction (datafile, EOCVfile, FECfile, RPT_FECfile, RPT_SOHfile, 
                
     # convert the NumPy array to a Pandas DataFrame and assign column names
     df = pd.DataFrame(Inputdata, columns=column_names)   
-
+    
     print('The features are listed in the order of', column_names)
              
     return df #feature df
 
 #%%
 if  __name__ == '__main__':
-    features1 = features_extraction('2C0degCs1/data.mat', '2C0degCs1/EOCV.mat', '2C0degCs1/EFC.mat', '2C0degCs1/RPT_EFC.mat', '2C0degCs1/SOH.mat', V_min=3.5, V_max=4.0, I_min=100, I_max=500)
+    features1 = features_extraction('2C0degCs1/mat/data.mat', '2C0degCs1/mat/EOCV.mat', '2C0degCs1/mat/EFC.mat', '2C0degCs1/mat/RPT_EFC.mat', '2C0degCs1/mat/SOH.mat', V_min=3.65, V_max=4.1, I_min=100, I_max=500)
