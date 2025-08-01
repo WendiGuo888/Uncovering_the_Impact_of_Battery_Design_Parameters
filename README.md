@@ -6,6 +6,7 @@ The original analysis was performed using ten datasets designed to emulate elect
 
 New data can be added to the analysis as long as it follows the same format as the processed dataset. Specifically, it must adhere to the required structure format and naming conventions.
 <img width="316" height="164" alt="image" src="https://github.com/user-attachments/assets/2de6e6b6-445f-4063-8e2f-004f8196c301" />
+
 <img width="315" height="175" alt="image" src="https://github.com/user-attachments/assets/110880b6-892b-4ce4-9c30-288ef27ac345" />
 <img width="343" height="186" alt="image" src="https://github.com/user-attachments/assets/afff6b4e-432e-43f1-a39d-89f3b1d2626a" />
 
