@@ -5,9 +5,9 @@ This repository contains scripts for extracting features from partial charges an
 The original analysis was performed using ten datasets designed to emulate electric vehicle (EV) operation under World Harmonized Light Vehicles Test Cycle (WLTC) driving profiles. Both the raw and processed data can be found on Zenodo: https://doi.org/10.5281/zenodo.16538328. Only one multistep fast-charging dataset is publicly available.
 
 New data can be added to the analysis as long as it follows the same format as the processed dataset. Specifically, it must adhere to the required structure format and naming conventions.
-<img width="316" height="164" alt="image" src="https://github.com/user-attachments/assets/2de6e6b6-445f-4063-8e2f-004f8196c301" />
-<img width="315" height="175" alt="image" src="https://github.com/user-attachments/assets/110880b6-892b-4ce4-9c30-288ef27ac345" />
-<img width="343" height="186" alt="image" src="https://github.com/user-attachments/assets/afff6b4e-432e-43f1-a39d-89f3b1d2626a" />
+<img width="316" height="167" alt="image" src="https://github.com/user-attachments/assets/ab00d1ff-eea3-4f99-892e-582c5790868c" />
+<img width="316" height="171" alt="image" src="https://github.com/user-attachments/assets/945b7387-8ff3-4d1e-8492-0f33c23b8a45" />
+<img width="353" height="167" alt="image" src="https://github.com/user-attachments/assets/8db17ada-c330-430a-906e-d6d80e0bfd36" />
 
 # Scripts
 The repository contains six scripts:
