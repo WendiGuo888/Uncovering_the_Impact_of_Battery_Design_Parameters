@@ -4,7 +4,7 @@ This repository contains scripts for extracting features from partial charges an
 # Data
 The original analysis was performed using ten datasets designed to emulate electric vehicle (EV) operation under World Harmonized Light Vehicles Test Cycle (WLTC) driving profiles. Both the raw and processed data can be found on Zenodo: https://doi.org/10.5281/zenodo.16538328. Only one multistep fast-charging dataset is publicly available.
 
-New data can be added to the analysis, as long as it follows the same format as the processed dataset. Specifically, it must adhere to the required folder structure, file naming conventions, and file formats.
+New data can be added to the analysis as long as it follows the same format as the processed dataset. Specifically, it must adhere to the required structure format and naming conventions.
 <img width="316" height="164" alt="image" src="https://github.com/user-attachments/assets/2de6e6b6-445f-4063-8e2f-004f8196c301" />
 <img width="315" height="175" alt="image" src="https://github.com/user-attachments/assets/110880b6-892b-4ce4-9c30-288ef27ac345" />
 <img width="343" height="186" alt="image" src="https://github.com/user-attachments/assets/afff6b4e-432e-43f1-a39d-89f3b1d2626a" />
@@ -12,7 +12,7 @@ New data can be added to the analysis, as long as it follows the same format as 
 # Scripts
 The repository contains six scripts:
 
--   `featureextraction`: A script for extracting 29 physically interpretable features from processed structural data. It relies on the `features_extraction` functionand requires the processed files EFC.mat and EOCV.mat.
+-   `featureextraction`: A script for extracting 29 physically interpretable features from processed structural data. It relies on the `features_extraction` function and requires the processed files EFC.mat and EOCV.mat.
 -   `functions`: A script containing utility functions for data processing and model preparation. It includes `split_battery_data_with_train_test_dynamic` for splitting the dataset into training and test sets, `process_features_with_physics` for dynamically determining whether to embed physical features, `predict_and_plot` for predicting physical features using partial charges and generating plots, `process_train_val_test_data_optimized` for embedding aging-related columns during dataset preparation, and `prepare_battery_dataset` for processing raw battery feature data into training and testing sets for ML modelling, including physical feature injection, feature selection, and normalization.
 -   `learnphysics`:  A script for deriving the mapping relationship between simulation profiles and partial charges based on extracted features. This mapping is established using three categories of features: voltage, capacity, and capacity deviation. The process is implemented through the function `process_and_analyze_battery_data`.
 -   `main`: A script used to extract features, map simulation features, organize all battery datasets, train models, and evaluate their performance with or without physical features derived from digital twin simulation files.
