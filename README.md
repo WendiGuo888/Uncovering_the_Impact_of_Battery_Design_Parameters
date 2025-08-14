@@ -21,5 +21,5 @@ The repository contains six scripts:
 This project is licensed under the MIT License.
 
 # Acknowledgements
-This work is supported by Nordic Energy Research (Vehicle battery storage for green transport and grid stability in the Nordics), the Swedish Electromobility Center and the Swedish Energy Agency project EV drivers in the driver’s seat.
+This work is supported by Nordic Energy Research (Vehicle battery storage for green transport and grid stability in the Nordics), the Swedish Electromobility Center and the Swedish Energy Agency project EV drivers in the driver’s seat. We also acknowledge support from Batteries Sweden and the STandUP for Energy and COMPEL consortia.
 
